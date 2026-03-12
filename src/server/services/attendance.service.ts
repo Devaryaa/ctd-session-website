@@ -1,5 +1,5 @@
 import { hash, compare } from "bcryptjs";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { generateRandomCode } from "@/lib/utils";
 
 const CODE_EXPIRY_SECONDS = 20;
