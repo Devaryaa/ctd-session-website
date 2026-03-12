@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { SessionType } from "@prisma/client";
 import { CreateSessionInput } from "@/lib/validations/session";
 
