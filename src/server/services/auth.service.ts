@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { Role } from "@prisma/client";
 import { RegisterInput } from "@/lib/validations/auth";
 import { sendVerificationEmail } from "@/lib/mail";
