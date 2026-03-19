@@ -28,14 +28,17 @@ function checkRateLimit(studentId: string): boolean {
   return true;
 }
 
-export async function generateAttendanceCode(sessionId: string, trainerId: string) {
-  const session = await prisma.session.findFirst({
-    where: { id: sessionId, trainerId },
-  });
+export async function generateAttendanceCode(
+  sessionId: string,
+  userId: string,
+  isAdmin: boolean = false
+) {
+  const where = isAdmin
+    ? { id: sessionId }
+    : { id: sessionId, trainerId: userId };
 
-  if (!session) {
-    throw new Error("Session not found or unauthorized");
-  }
+  const session = await prisma.session.findFirst({ where });
+  if (!session) throw new Error("Session not found or unauthorized");
 
   const code = generateRandomCode(6);
   const codeHash = await hash(code, 10);
