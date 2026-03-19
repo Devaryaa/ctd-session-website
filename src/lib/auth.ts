@@ -15,57 +15,53 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
-        const dbUser = await prisma.user.findUnique({
+        const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         });
 
-        if (!dbUser) return null;
+        if (!user) return null;
 
-        // Explicitly assert type to bypass local Prisma Client cache delays
-        const user = dbUser as typeof dbUser & { emailVerified?: Date | null };
+        // ✅ FIXED: use correct field
+        const isValid = await compare(credentials.password, user.password);
 
-        const isValid = await compare(credentials.password, user.passwordHash);
         if (!isValid) return null;
 
         return {
-          id: user.id,
+          id: String(user.id),
           email: user.email,
           name: user.name,
           role: user.role,
-          emailVerified: user.emailVerified,
         };
       },
     }),
   ],
+
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60,
+  },
+
   callbacks: {
-    async jwt({ token, user, trigger, session }) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
         token.role = user.role;
-        // User object provides Date|null natively so we serialize cleanly
-        token.emailVerified = user.emailVerified ? new Date(user.emailVerified).toISOString() : null;
-      }
-      // Allow live updates to the JWT if users complete verification actively while logged in.
-      if (trigger === "update" && session?.emailVerified) {
-        token.emailVerified = session.emailVerified;
       }
       return token;
     },
+
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
         session.user.role = token.role as Role;
-        session.user.emailVerified = token.emailVerified as string | null;
       }
       return session;
     },
   },
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-  },
+
   pages: {
     signIn: "/",
   },
+
   secret: process.env.NEXTAUTH_SECRET,
 };
