@@ -4,14 +4,14 @@ import { CreateNoteInput } from "@/lib/validations/note";
 export async function createNote(
   sessionId: string,
   trainerId: string,
-  data: CreateNoteInput
+  data: CreateNoteInput,
+  isAdmin: boolean = false
 ) {
-  const session = await prisma.session.findFirst({
-    where: { id: sessionId, trainerId },
-  });
-
-  if (!session) {
-    throw new Error("Session not found or unauthorized");
+  if (!isAdmin) {
+    const session = await prisma.session.findFirst({
+      where: { id: sessionId, trainerId },
+    });
+    if (!session) throw new Error("Session not found or unauthorized");
   }
 
   return prisma.note.create({
