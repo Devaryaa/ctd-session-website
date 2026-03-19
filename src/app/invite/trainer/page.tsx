@@ -7,8 +7,12 @@ import Image from "next/image";
 // Bypass static TS errors for dynamic lookup
 export const dynamic = "force-dynamic";
 
-export default async function InviteTrainerPage({ searchParams }: { searchParams: { token?: string } }) {
-    const token = searchParams.token;
+export default async function InviteTrainerPage({ 
+  searchParams 
+}: { 
+  searchParams: Promise<{ token?: string }> 
+}) {
+  const { token } = await searchParams;
 
     const PageWrapper = ({ children }: { children: React.ReactNode }) => (
         <main className="min-h-screen w-full flex items-center justify-center bg-neutral-950 relative px-6 md:px-10">
