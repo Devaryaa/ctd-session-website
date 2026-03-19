@@ -38,7 +38,7 @@ export default function SessionDetailPage() {
   const [sortBy, setSortBy] = useState<"name" | "rollNumber">("name");
 
   // Timer State
-  const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
+  const [timeLeft, setTimeLeft] = useState(20); // 5 minutes in seconds
   const { toast } = useToast();
 
   const id = params.id as string;
