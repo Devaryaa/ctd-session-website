@@ -49,8 +49,7 @@ export default function HomePage() {
         description: "You have successfully signed in.",
         variant: "success",
       });
-      router.push("/dashboard");
-      router.refresh();
+  window.location.href = "/dashboard";
     } catch {
       toast({
         title: "Error",
