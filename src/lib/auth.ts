@@ -42,21 +42,26 @@ export const authOptions: NextAuthOptions = {
   },
 
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.role = user.role;
-      }
-      return token;
-    },
-
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
-        session.user.role = token.role as Role;
-      }
-      return session;
-    },
+    async jwt({ token, user, trigger, session }) {
+  if (user) {
+    token.id = user.id;
+    token.role = user.role;
+    token.emailVerified = user.emailVerified ?? null;
+  }
+  // Handle session update (called from verify page's `update()`)
+  if (trigger === "update" && session?.emailVerified) {
+    token.emailVerified = session.emailVerified;
+  }
+  return token;
+},
+async session({ session, token }) {
+  if (session.user) {
+    session.user.id = token.id as string;
+    session.user.role = token.role as Role;
+    session.user.emailVerified = token.emailVerified as string | null;
+  }
+  return session;
+},
   },
 
   pages: {
