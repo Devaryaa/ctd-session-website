@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
+import { useTheme } from "next-themes";
+import { useState, useEffect } from "react";
 import {
   LayoutDashboard,
   BookOpen,
@@ -17,6 +18,7 @@ import {
   BarChart,
   LineChart,
   Code,
+  Info,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -54,6 +56,9 @@ const adminNavItems = [
 export function Sidebar() {
   const pathname = usePathname();
   const { data: session } = useSession();
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const role = session?.user?.role;
 
   let activeNavItems = studentNavItems;
@@ -65,14 +70,16 @@ export function Sidebar() {
       <div className="flex h-full flex-col">
         <div className="flex items-center gap-2 px-4 py-4">
           <Link href="/dashboard" className="flex items-center">
-            <Image
-              src="/logos/ctd.svg"
-              alt="CTD Logo"
-              width={140}
-              height={36}
-              style={{ height: "36px", objectFit: "contain" }}
-              priority
-            />
+            {mounted ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={resolvedTheme === "dark" ? "/logos/ctd-dark.svg" : "/logos/ctd-light.svg"}
+                alt="CTD Logo"
+                style={{ height: "36px", width: "auto", objectFit: "contain", background: "transparent" }}
+              />
+            ) : (
+              <div style={{ width: 140, height: 36 }} />
+            )}
           </Link>
         </div>
         <nav className="flex-1 space-y-1 px-3">
@@ -106,6 +113,13 @@ export function Sidebar() {
           })}
         </nav>
         <div className="border-t p-4 space-y-2">
+          <Link
+            href="/dashboard/about"
+            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-900 dark:hover:text-neutral-300"
+          >
+            <Info className="h-5 w-5" />
+            About CTD
+          </Link>
           <Link
             href="/dashboard/team"
             className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-900 dark:hover:text-neutral-300"

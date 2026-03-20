@@ -1,29 +1,22 @@
 import nodemailer from "nodemailer";
 
-// Using a localized NodeMailer configuration mocking dispatch logic in development terminals.
-// To switch to a real email delivery platform, inject standard SMTP parameters into the createTransport string here.
+// Real SMTP transporter using credentials from environment variables.
+// For Gmail: set SMTP_USER to your Gmail address and SMTP_PASS to an App Password.
+// Generate an App Password at: https://myaccount.google.com/apppasswords
 const transporter = nodemailer.createTransport({
-    host: "localhost",
-    port: 1025, // Mock port
-    secure: false, // Disabling TLS for local mocks
+    host: process.env.SMTP_HOST || "smtp.gmail.com",
+    port: Number(process.env.SMTP_PORT) || 587,
+    secure: process.env.SMTP_SECURE === "true", // false for port 587 (STARTTLS)
+    auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+    },
 });
 
-// Since we are operating locally, we'll override the dispatch flow entirely to simply log to terminal to prevent crashes.
 export async function sendVerificationEmail(email: string, code: string) {
-    if (process.env.NODE_ENV === "development") {
-        console.log(`\n\n`);
-        console.log(`========================= EMAIL DISPATCH =========================`);
-        console.log(`To: ${email}`);
-        console.log(`Subject: Verify your CTD Portal Email Address`);
-        console.log(`Body: Your verification code is: => ${code} <= `);
-        console.log(`==================================================================`);
-        console.log(`\n\n`);
-        return true;
-    }
-
     try {
         await transporter.sendMail({
-            from: '"CTD Portal" <no-reply@ctd.thapar.edu>',
+            from: process.env.EMAIL_FROM || '"CTD Portal" <no-reply@ctd.thapar.edu>',
             to: email,
             subject: "Verify your CTD Portal Email Address",
             html: `
@@ -46,20 +39,9 @@ export async function sendVerificationEmail(email: string, code: string) {
 }
 
 export async function sendPasswordResetEmail(email: string, code: string) {
-    if (process.env.NODE_ENV === "development") {
-        console.log(`\n\n`);
-        console.log(`========================= EMAIL DISPATCH =========================`);
-        console.log(`To: ${email}`);
-        console.log(`Subject: Reset your CTD Portal Password`);
-        console.log(`Body: Your password reset code is: => ${code} <= `);
-        console.log(`==================================================================`);
-        console.log(`\n\n`);
-        return true;
-    }
-
     try {
         await transporter.sendMail({
-            from: '"CTD Portal" <no-reply@ctd.thapar.edu>',
+            from: process.env.EMAIL_FROM || '"CTD Portal" <no-reply@ctd.thapar.edu>',
             to: email,
             subject: "Reset your CTD Portal Password",
             html: `
