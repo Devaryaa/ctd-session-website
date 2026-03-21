@@ -105,7 +105,6 @@ export default function AdminUsersPage() {
                     { id: "", label: "All Users" },
                     { id: "STUDENT", label: "Students" },
                     { id: "TRAINER", label: "Trainers" },
-                    { id: "ADMIN", label: "Administrators" },
                 ].map((tab) => (
                     <button
                         key={tab.id}

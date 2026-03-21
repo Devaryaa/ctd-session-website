@@ -1,0 +1,42 @@
+interactive rebase in progress; onto a8fd548
+Last commands done (5 commands done):
+   pick 500505e # feat: add about page and update team page
+   pick 348efd9 # Admin fixes, analytics lockdown, middleware routing fixes, and team page updates
+  (see more in file .git/rebase-merge/done)
+No commands remaining.
+You are currently rebasing branch 'main' on 'a8fd548'.
+  (fix conflicts and then run "git rebase --continue")
+  (use "git rebase --skip" to skip this patch)
+  (use "git rebase --abort" to check out the original branch)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   out.txt
+	modified:   prisma/seed.ts
+	modified:   src/app/api/admin/users/route.ts
+	modified:   src/app/dashboard/about/page.tsx
+	modified:   src/app/dashboard/admin/users/page.tsx
+	modified:   src/app/dashboard/reports/page.tsx
+	modified:   src/app/dashboard/team/page.tsx
+	modified:   src/components/dashboard/admin-dashboard.tsx
+	modified:   src/components/layout/sidebar.tsx
+	modified:   src/middleware.ts
+	modified:   src/server/services/analytics.service.ts
+	modified:   src/server/services/auth.service.ts
+
+Unmerged paths:
+  (use "git restore --staged <file>..." to unstage)
+  (use "git add <file>..." to mark resolution)
+	both modified:   src/app/api/attendance/generate-code/route.ts
+	both modified:   src/lib/auth.ts
+	both modified:   src/server/services/attendance.service.ts
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   out.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	git_status.txt
+

@@ -86,7 +86,7 @@ export default function AboutPage() {
         </div>
 
         <div className="relative z-10 max-w-3xl mx-auto">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-500 dark:text-purple-400 mb-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-red-500 dark:text-red-400 mb-4">
             Thapar Institute of Engineering & Technology
           </p>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-neutral-900 dark:text-white tracking-tight mb-6">

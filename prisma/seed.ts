@@ -11,14 +11,16 @@ async function main() {
   await prisma.user.deleteMany();
 
   const mockPassword = await hash("Test1234!", 12);
+  const adminPassword = await hash("admin@ctd120906", 12);
 
-  const admin = await prisma.user.create({
-    data: {
-      name: "Global Administrator",
-      email: "admin@ctd.edu",
-      passwordHash: mockPassword,
-      role: "ADMIN",
-    },
+  const admin1 = await prisma.user.create({
+    data: { name: "Admin One", email: "admin1@ctd.edu", passwordHash: adminPassword, role: "ADMIN" },
+  });
+  const admin2 = await prisma.user.create({
+    data: { name: "Admin Two", email: "admin2@ctd.edu", passwordHash: adminPassword, role: "ADMIN" },
+  });
+  const admin3 = await prisma.user.create({
+    data: { name: "Admin Three", email: "admin3@ctd.edu", passwordHash: adminPassword, role: "ADMIN" },
   });
 
   const trainer = await prisma.user.create({
@@ -99,8 +101,8 @@ async function main() {
 
   console.log("Mock Environment Seeded Successfully!");
   console.log("---");
-  console.log("ALL ACCOUNTS PASSWORD: Test1234!");
-  console.log("Admin Email:", admin.email);
+  console.log("Admin Emails: admin1@ctd.edu, admin2@ctd.edu, admin3@ctd.edu");
+  console.log("Admin Password: admin@ctd120906");
   console.log("Trainer Email:", trainer.email);
   console.log("Student Email:", student.email);
   console.log("---");

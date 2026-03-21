@@ -38,7 +38,6 @@ const trainerNavItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/sessions", label: "Sessions", icon: BookOpen },
   { href: "/dashboard/attendance", label: "Attendance Management", icon: CheckCircle },
-  { href: "/dashboard/students", label: "Student List", icon: Users },
   { href: "/dashboard/reports", label: "Reports", icon: Clock },
   { href: "/dashboard/settings", label: "Settings", icon: Settings },
 ];
@@ -47,8 +46,7 @@ const adminNavItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/admin/users", label: "Users", icon: Users },
   { href: "/dashboard/admin/trainers", label: "Trainers", icon: Users },
-  { href: "/dashboard/admin/sessions", label: "Sessions", icon: BookOpen },
-  { href: "/dashboard/admin/analytics", label: "Analytics", icon: LineChart },
+  { href: "/dashboard/sessions", label: "Sessions", icon: BookOpen },
   { href: "/dashboard/reports", label: "Reports", icon: Clock },
   { href: "/dashboard/settings", label: "Settings", icon: Settings },
 ];

@@ -108,12 +108,14 @@ export async function getAdminAnalytics() {
   ]);
 
   const userCounts = users.reduce((acc, u) => {
-    acc[u.role] = u._count.id;
+    if (u.role !== "ADMIN") {
+      acc[u.role] = u._count.id;
+    }
     return acc;
   }, {} as Record<string, number>);
 
   return {
-    totalUsers: users.reduce((s, u) => s + u._count.id, 0),
+    totalUsers: users.reduce((s, u) => u.role !== "ADMIN" ? s + u._count.id : s, 0),
     totalSessions: sessions,
     totalAttendances: attendances,
     usersByRole: userCounts,

@@ -24,7 +24,7 @@ const devyanshLinkedin = "";
 const devyanshGithub = "";
 const devyanshEmail = "";
 
-// DESIGN TEAM LINKS
+
 const vidhishLinkedin = "";
 const vidhishGithub = "";
 const vidhishEmail = "";
@@ -42,7 +42,7 @@ const diyaGithub = "";
 const diyaEmail = "";
 
 const mentors = [
-  { name: "Dr.Sanmeet Sindhu", role: "Chief Training & Development Officer", initials: "SS", image: "/team/Sanmeet.jpg", linkedin: sanmeetLinkedin, github: "", email: sanmeetEmail },
+  { name: "Prof. Sanmeet Sindhu", role: "Chief Training & Development Officer", initials: "SS", image: "/team/Sanmeet.jpg", linkedin: sanmeetLinkedin, github: "", email: sanmeetEmail },
   { name: "Dr. Varleen Kaur", role: "Assistant Manager,Training and Development", initials: "VK", image: "/team/Varleen.jpg", linkedin: varleenLinkedin, github: "", email: varleenEmail },
 ];
 
@@ -53,7 +53,7 @@ const devTeam = [
 ];
 
 const designTeam = [
-  { name: "Vidhish Sangawan", role: "System Design & Ideation", initials: "VS", image: "/team/Vidhish.jpg", linkedin: vidhishLinkedin, github: vidhishGithub, email: vidhishEmail },
+  { name: "Vidhish Sangwan", role: "System Design & Ideation", initials: "VS", image: "/team/Vidhish.jpg", linkedin: vidhishLinkedin, github: vidhishGithub, email: vidhishEmail },
   { name: "Bhoomi Garg", role: "System Design & Ideation", initials: "BG", image: "/team/Bhoomi.jpg", linkedin: bhoomiLinkedin, github: bhoomiGithub, email: bhoomiEmail },
   { name: "Deeya Mehta", role: "System Design & Ideation", initials: "DM", image: "/team/Deeya.jpg", linkedin: deeyaLinkedin, github: deeyaGithub, email: deeyaEmail },
   { name: "Diya Jain", role: "System Design & Ideation", initials: "DJ", image: "/team/diya.jpg", linkedin: diyaLinkedin, github: diyaGithub, email: diyaEmail },

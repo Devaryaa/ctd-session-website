@@ -25,11 +25,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid session ID" }, { status: 400 });
     }
 
-   const result = await generateAttendanceCode(
-  parsed.data.sessionId,
-  session.user.id,
-  session.user.role === Role.ADMIN
-);
+    const result = await generateAttendanceCode(
+      parsed.data.sessionId,
+      session.user.id,
+      session.user.role === Role.ADMIN
+    );
 
     return NextResponse.json(result);
   } catch (error) {

@@ -67,7 +67,13 @@ export default function ReportsPage() {
   useEffect(() => {
     fetch(`/api/analytics/history?range=${dateRange}`)
       .then((r) => r.json())
-      .then(setHistory)
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setHistory(data);
+        } else {
+          setHistory([]);
+        }
+      })
       .catch(() => setHistory([]));
   }, [dateRange]);
 

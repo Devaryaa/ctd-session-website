@@ -41,10 +41,12 @@ export function AdminDashboard() {
     );
   }
 
-  const roleData = Object.entries(analytics.usersByRole || {}).map(([name, value]) => ({
-    name,
-    count: value,
-  }));
+  const roleData = Object.entries(analytics.usersByRole || {})
+    .filter(([name]) => name !== "ADMIN")
+    .map(([name, value]) => ({
+      name,
+      count: value,
+    }));
 
   return (
     <div className="space-y-8">

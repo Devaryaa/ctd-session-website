@@ -18,6 +18,8 @@ export async function middleware(request: NextRequest) {
       // Do not redirect verified users away from the newly requested verify route by default, but let them hit it if they desire (for resend flows, although they should skip it).
       // Actually strictly prevent unverified accounts from leaving /auth/verify, and pull verified users out.
       const isVerifyRoute = request.nextUrl.pathname.startsWith("/auth/verify");
+      const isPasswordRoute = request.nextUrl.pathname.startsWith("/auth/forgot-password") || 
+                              request.nextUrl.pathname.startsWith("/auth/reset-password");
 
       if (token.role === "STUDENT" && !token.emailVerified) {
         if (!isVerifyRoute) {
@@ -30,8 +32,8 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL("/dashboard", request.url)); // Move validated students out
       }
 
-      // Keep everyone else routing to dashboard if they hit /auth
-      if (!isVerifyRoute) {
+      // Keep everyone else routing to dashboard if they hit /auth, unless it's a password reset route
+      if (!isVerifyRoute && !isPasswordRoute) {
         return NextResponse.redirect(new URL("/dashboard", request.url));
       }
     }

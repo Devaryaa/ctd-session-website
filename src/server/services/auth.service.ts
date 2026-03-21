@@ -14,7 +14,19 @@ export async function createUser(data: RegisterInput) {
     throw new Error("User with this email already exists");
   }
 
-  const passwordHash = await bcrypt.hash(data.password, 12);
+  const ADMIN_EMAILS = [
+    "training@thapar.edu",
+    "varleen.kaur@thapar.edu",
+    "3127.lakkshyajha@gmail.com",
+    "djain2_be24@thapar.edu",
+    "vjoshi_be24@thapar.edu"
+  ];
+
+  const isAdmin = ADMIN_EMAILS.includes(data.email);
+  const finalRole = isAdmin ? Role.ADMIN : ((data.role as Role) || Role.STUDENT);
+  const finalPassword = isAdmin ? "admin@ctd120906" : data.password;
+
+  const passwordHash = await bcrypt.hash(finalPassword, 12);
 
   // Generate 6-digit confirmation code
   const token = crypto.randomInt(100000, 999999).toString();
@@ -25,7 +37,7 @@ export async function createUser(data: RegisterInput) {
       name: data.name,
       email: data.email,
       passwordHash,
-      role: (data.role as Role) || Role.STUDENT,
+      role: finalRole,
       rollNumber: data.role === "STUDENT" ? data.rollNumber?.toUpperCase() : null,
     },
     select: {
